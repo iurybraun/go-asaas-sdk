@@ -1,4 +1,4 @@
-package asaas_test
+package asaas
 
 import (
 	"os"
