@@ -37,6 +37,13 @@ type Payment struct {
     Anticipated             bool            `json:"anticipated"`
 }
 
+type PaymentQRCode struct {
+    Success             bool            `json:"success"`
+    EncodedImage        string          `json:"encodedImage"`
+    Payload             string          `json:"payload"`
+    ExpirationDate      string          `json:"expirationDate"`
+}
+
 type PaymentDiscount struct {
     Value            float32 `json:"value"`
     DueDateLimitDays int32   `json:"dueDateLimitDays"`
@@ -211,8 +218,8 @@ func (asaas *AsaasClient) GetPayment(mode, id string) (*Payment, *Error, error) 
     return response, nil, nil
 }
 
-func (asaas *AsaasClient) GetPaymentQRCode(mode, id string) (*Payment, *Error, error) {
-    var response *Payment
+func (asaas *AsaasClient) GetPaymentQRCode(mode, id string) (*PaymentQRCode, *Error, error) {
+    var response *PaymentQRCode
     err, errAPI := asaas.Request(mode, "GET", fmt.Sprintf("payments/%s/pixQrCode", id), nil, &response)
     if err != nil {
         return nil, nil, err
